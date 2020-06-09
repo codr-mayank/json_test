@@ -22,6 +22,18 @@ class _JsonParsingSimpleState extends State<JsonParsingSimple> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Parsing Json')),
+      body: Center(
+        child: Container(
+          child: FutureBuilder(
+              future: getData(),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data[0]['title']);
+                }
+                return CircularProgressIndicator();
+              }),
+        ),
+      ),
     );
   }
 
@@ -31,7 +43,9 @@ class _JsonParsingSimpleState extends State<JsonParsingSimple> {
     Network network = Network(url);
 
     data = network.fetchData();
-    print(data);
+    // data.then((value) {
+    //   print(value[0]['title']);
+    // });
     return data;
   }
 }
@@ -46,7 +60,7 @@ class Network {
     Response response = await get(Uri.encodeFull(url));
     if (response.statusCode == 200) {
       // print(response.body);
-      return json.decode(response.body[0]);
+      return json.decode(response.body);
     } else {
       print(response.statusCode);
     }
