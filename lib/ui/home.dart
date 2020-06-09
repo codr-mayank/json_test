@@ -9,10 +9,6 @@ class _BizCardjState extends State<BizCardj> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        child: Icon(Icons.add),
-      ),
       appBar: AppBar(
         title: Text("Json Test"),
       ),
