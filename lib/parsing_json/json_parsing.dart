@@ -28,7 +28,8 @@ class _JsonParsingSimpleState extends State<JsonParsingSimple> {
               future: getData(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  return Text(snapshot.data[0]['title']);
+                  return createListView(snapshot.data, context);
+                  // return Text(snapshot.data[0]['userId'].toString());
                 }
                 return CircularProgressIndicator();
               }),
@@ -47,6 +48,33 @@ class _JsonParsingSimpleState extends State<JsonParsingSimple> {
     //   print(value[0]['title']);
     // });
     return data;
+  }
+
+  Widget createListView(List data, BuildContext context) {
+    return Container(
+      child: ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (context, int index) {
+            return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Divider(height: 5.0,),
+                  ListTile(
+                    title: Text('${data[index]['title']}'),
+                    subtitle: Text('${data[index]['body']}'),
+                    leading: Column(
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundColor: Colors.black54,
+                          radius: 23,
+                          child: Text('${data[index]['id']}'),
+                        )
+                      ],
+                    ),
+                  )
+                ]);
+          }),
+    );
   }
 }
 
